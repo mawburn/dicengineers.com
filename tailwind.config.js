@@ -8,11 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      bgColor: '#1E222C',
-      fontColor: '#F1F1EB',
-      primary: '#6D7682',
-      secondary: '#A09DA8',
-      tertiary: '#7F828F'
+      colors: {
+        darkColor: '#343433',
+        lightColor: '#F8F5E3',
+        primary: '#69C5A9',
+        secondary: '#D27F4F',
+        darkSecondary: '#30292B'
+      },
     },
   },
   plugins: [],
