@@ -9,7 +9,14 @@ export default function Home() {
     <Layout className="flex-row justify-between gap-4">
       <Aside />
       <section className="flex flex-col justify-center grow">
-        <Image src="/center.webp" width={480} height={480} alt="Dice Engine" />
+        <Image
+          src="/center.webp"
+          width={480}
+          height={480}
+          alt="Dice Engine"
+          placeholder="blur"
+          blurDataURL="/center-blur.webp"
+        />
         <Overlay />
       </section>
       <Info />

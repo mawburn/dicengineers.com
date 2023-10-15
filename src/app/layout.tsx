@@ -3,6 +3,9 @@ import './globals.css'
 import clsx from 'clsx'
 import { Kanit, Ubuntu, Ubuntu_Mono } from 'next/font/google'
 
+import faviconPng from './favicon.png'
+import faviconSvg from './favicon.svg'
+
 import type { Metadata } from 'next'
 const kanit = Kanit({
   subsets: ['latin'],
@@ -29,7 +32,10 @@ export const metadata: Metadata = {
   title: 'Dicengineers',
   description:
     'Uniting tech enthusiasts, from software engineers to designers, with a shared love for tabletop games. Dive into boardgames, ttrpgs, wargames, and more. Whether you’re new to tech or a seasoned pro, our community welcomes you.',
-  icons: ['favicon.svg'],
+  icons: [
+    { url: faviconSvg, type: 'image/svg+xml', rel: 'icon' },
+    { url: faviconPng, type: 'image/png', rel: 'icon' },
+  ],
   viewport: 'width=device-width, initial-scale=1',
 }
 
