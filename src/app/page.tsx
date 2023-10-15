@@ -6,7 +6,7 @@ import { Overlay } from 'src/components/Overlay'
 
 export default function Home() {
   return (
-    <Layout className="flex-row justify-between gap-4">
+    <Layout className="md:flex-row md:justify-between flex-wrap gap-4">
       <Aside />
       <section className="flex flex-col justify-center grow">
         <Image

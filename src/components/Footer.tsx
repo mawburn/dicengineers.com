@@ -1,9 +1,9 @@
 import { Hammer } from 'lucide-react'
 
-const Dash = () => <span className="mx-1">|</span>
+const Dash = () => <span className="hidden md:inline-block md:mx-1">|</span>
 
 export const Footer = () => (
-  <footer className="flex flex-wrap w-full gap-4 text-xs min-h-20 justify-center items-center pb-4">
+  <footer className="flex flex-wrap w-full gap-2 md:gap-4 text-xs min-h-20 justify-center items-center pb-4 mt-10 md:mt-0">
     <div>&copy; {new Date().getFullYear()} Dicengineers.com</div>
     <Dash />
     <address className="flex items-center gap-0 md:gap-2">

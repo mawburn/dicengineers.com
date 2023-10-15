@@ -14,9 +14,9 @@ export const PageHeader = ({}: PageHeaderProps) => (
         alt="Dicengineers"
         loading="eager"
       />{' '}
-      <h1 className="text-xl">Dicengineers</h1>
+      <h1 className="text-xl hidden md:block">Dicengineers</h1>
     </Link>
-    <nav className="mr-10">
+    <nav className="mr-2 md:mr-10">
       <ul className="flex gap-4">
         <li>
           <Link href="/showcase" className="underline">

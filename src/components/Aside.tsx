@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import fetch from 'node-fetch'
-import { cn } from 'src/lib/cn'
 import { getPosts } from 'src/lib/serverOnly/getPosts'
 import { uploadPosts } from 'src/lib/serverOnly/uploadPosts'
+
 import { Divider } from './Divider'
 
 interface Data {
@@ -72,13 +72,13 @@ async function getData() {
 }
 
 const countClasses =
-  'flex flex-col h-full gap-1 font-extralight font-header justify-center items-center mr-32' as const
+  'flex flex-col h-full gap-1 font-extralight font-header justify-center items-center md:mr-32' as const
 
 export const Aside = async () => {
   const { online, total, reddit, redditCount } = await getData()
 
   return (
-    <aside className="flex flex-col grow h-full items-center justify-start gap-2 pt-24">
+    <aside className="flex flex-col grow h-full items-center justify-center md:justify-start gap-2 pt-10 md:pt-24">
       {online && (
         <>
           <a
@@ -109,7 +109,7 @@ export const Aside = async () => {
           </a>
         </>
       )}
-      <Divider className="max-w-[50%] mr-32" />
+      <Divider className="max-w-[50%] md:mr-32" />
       {reddit && (
         <>
           <a className={countClasses} href="https://www.reddit.com/r/dicengineers" target="_blank">

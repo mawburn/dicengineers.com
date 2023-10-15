@@ -22,6 +22,10 @@
   code {
     @apply font-mono;
   }
+
+  a:hover, a:any-link:hover {
+    @apply cursor-pointer;
+  }
 }
 
 @keyframes wobble {
