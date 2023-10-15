@@ -8,7 +8,7 @@ export const Info = () => (
       </p>
     </section>
     <section>
-      <h2 className="text-center text-2xl pb-4">Who are</h2>
+      <h2 className="text-center text-2xl pb-4">Who are we?</h2>
       <p className="text-center">
         We’re a community of passionate creators. Not only do we adore tabletop games, but we also
         thrive on crafting innovative tools and additions for our gaming experiences.

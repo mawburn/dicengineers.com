@@ -114,6 +114,7 @@ export const Aside = async () => {
         <>
           <a className={countClasses} href="https://www.reddit.com/r/dicengineers" target="_blank">
             <Image src="/reddit.svg" width={40.5} height={36} alt="Discord" />
+            <span className="italic mt-2">r/dicengineers</span>
           </a>
           <a className={countClasses} href="https://www.reddit.com/r/dicengineers" target="_blank">
             <span className="font-bold text-xl">{reddit}</span>
