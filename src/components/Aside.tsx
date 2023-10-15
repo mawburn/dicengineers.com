@@ -78,7 +78,7 @@ export const Aside = async () => {
   const { online, total, reddit, redditCount } = await getData()
 
   return (
-    <aside className="flex flex-col grow h-full items-center justify-center md:justify-start gap-2 pt-10 md:pt-24">
+    <aside className="flex flex-col grow h-full items-center justify-center md:justify-start gap-2 pt-10">
       {online && (
         <>
           <a
@@ -95,7 +95,7 @@ export const Aside = async () => {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <span className="font-bold text-2xl">{online}</span>
+            <span className="text-2xl">{online}</span>
             <span className="italic">Active users</span>
           </a>
           <a
@@ -104,7 +104,7 @@ export const Aside = async () => {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <span className="font-bold text-2xl">{total}</span>
+            <span className="text-2xl">{total}</span>
             <span className="italic">Total users</span>
           </a>
         </>
@@ -117,11 +117,11 @@ export const Aside = async () => {
             <span className="italic mt-2">r/dicengineers</span>
           </a>
           <a className={countClasses} href="https://www.reddit.com/r/dicengineers" target="_blank">
-            <span className="font-bold text-xl">{reddit}</span>
+            <span className="text-xl">{reddit}</span>
             <span className="italic">Reddit users</span>
           </a>
           <a className={countClasses} href="https://www.reddit.com/r/dicengineers" target="_blank">
-            <span className="font-bold text-xl">{redditCount}</span>
+            <span className="text-xl">{redditCount}</span>
             <span className="italic">All time posts</span>
           </a>
         </>

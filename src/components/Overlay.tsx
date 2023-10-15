@@ -10,11 +10,11 @@ export const Overlay = () => (
     className={cn(
       'absolute',
       'inline-block',
-      'md:top-1/3',
+      'md:top-[450px]',
       'xs:left-0 md:left-1/5',
       'mt-52 md:mt-0',
       'mx-4',
-      'bg-discord/95',
+      'bg-secondary/95',
       'font-body',
       'text-lg',
       'p-4',

@@ -45,8 +45,8 @@ export const metadata: Metadata = {
     siteName: 'Dicengineers.com',
     locale: 'en',
     images: [
-      { url: '/ogimg.webp', width: 512, height: 512, alt: 'Dicengineers.com' },
-      { url: '/ogimg.png', width: 512, height: 512, alt: 'Dicengineers.com' },
+      { url: '/ogimg.webp', width: 256, height: 256, alt: 'Dicengineers.com' },
+      { url: '/ogimg.png', width: 256, height: 256, alt: 'Dicengineers.com' },
     ],
     url: 'https://dicengineers.com',
   },
