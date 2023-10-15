@@ -2,26 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  html, body {
+    @apply h-full w-full text-light font-bodyFont;
+  }
+
+  #main {
+    @apply min-h-max bg-gradient-to-b from-darkPrimary to-darkSecondary;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-header tracking-wide;
+  }
+
+  code {
+    @apply font-mono;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@keyframes wobble {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  6.67% { transform: rotate(10deg); }
+  13.33% { transform: rotate(0deg); }
+  20% { transform: rotate(-5deg); }
+  26.67% { transform: rotate(0deg); }
+  33.33% { transform: rotate(10deg); }
+  40% { transform: rotate(0deg); }
+  46.67% { transform: rotate(-5deg); }
+  53.33% { transform: rotate(0deg); }
+  60% { transform: rotate(10deg); }
+  66.67% { transform: rotate(0deg); }
+  73.33% { transform: rotate(-5deg); }
+  80% { transform: rotate(0deg); }
+  80.1%, 100% { transform: rotate(0deg); }
+}
+
+.iconWobble {
+  transform-origin: center;
+  animation: wobble 2.25s infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+      animation: none !important;
+  }
 }
