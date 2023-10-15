@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { DISCORD } from 'src/lib/constants'
 
 interface PageHeaderProps {}
 
@@ -11,7 +12,7 @@ export const PageHeader = ({}: PageHeaderProps) => (
         src="/de.svg"
         width={42}
         height={42}
-        alt="Dicengineers"
+        alt="Dicengineers Logo"
         loading="eager"
       />{' '}
       <h1 className="text-xl hidden md:block">Dicengineers</h1>
@@ -19,22 +20,17 @@ export const PageHeader = ({}: PageHeaderProps) => (
     <nav className="mr-2 md:mr-10">
       <ul className="flex gap-4">
         <li>
-          <Link href="/showcase" className="underline">
+          <Link href="/showcase" className="underline p-2">
             Showcase
           </Link>
         </li>
         <li>
-          <a
-            href="https://discord.gg/U4kB82phwJ"
-            rel="noopener noreferrer"
-            target="_blank"
-            className="underline"
-          >
+          <a href={DISCORD} rel="noopener noreferrer" target="_blank" className="underline p-2">
             Join Discord
           </a>
         </li>
         <li>
-          <a href="https://www.reddit.com/r/dicengineers" target="_blank" className="underline">
+          <a href="https://www.reddit.com/r/dicengineers" target="_blank" className="underline p-2">
             Go to Reddit
           </a>
         </li>

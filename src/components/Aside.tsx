@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import fetch from 'node-fetch'
+import { DISCORD } from 'src/lib/constants'
 import { getPosts } from 'src/lib/serverOnly/getPosts'
 import { uploadPosts } from 'src/lib/serverOnly/uploadPosts'
 
@@ -81,29 +82,14 @@ export const Aside = async () => {
     <aside className="flex flex-col grow h-full items-center justify-center md:justify-start gap-2 pt-10">
       {online && (
         <>
-          <a
-            className={countClasses}
-            href="https://discord.gg/U4kB82phwJ"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a className={countClasses} href={DISCORD} rel="noopener noreferrer" target="_blank">
             <Image src="/discord-white.svg" width={142} height={26.9} alt="Discord" />
           </a>
-          <a
-            className={countClasses}
-            href="https://discord.gg/U4kB82phwJ"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a className={countClasses} href={DISCORD} rel="noopener noreferrer" target="_blank">
             <span className="text-2xl">{online}</span>
             <span className="italic">Active users</span>
           </a>
-          <a
-            className={countClasses}
-            href="https://discord.gg/U4kB82phwJ"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a className={countClasses} href={DISCORD} rel="noopener noreferrer" target="_blank">
             <span className="text-2xl">{total}</span>
             <span className="italic">Total users</span>
           </a>

@@ -1,10 +1,11 @@
 import { Pointer } from 'lucide-react'
 import Image from 'next/image'
 import { cn } from 'src/lib/cn'
+import { DISCORD } from 'src/lib/constants'
 
 export const Overlay = () => (
   <a
-    href="https://discord.gg/U4kB82phwJ"
+    href={DISCORD}
     rel="noopener noreferrer"
     target="_blank"
     className={cn(

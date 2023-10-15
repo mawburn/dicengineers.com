@@ -16,6 +16,7 @@ export default function Home() {
           alt="Dice Engine"
           placeholder="blur"
           blurDataURL="/center-blur.webp"
+          loading="eager"
         />
         <Overlay />
       </section>

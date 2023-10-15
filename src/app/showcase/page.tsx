@@ -2,13 +2,14 @@ import { Layout } from 'src/components/Layout'
 import { OuterLink } from 'src/components/OuterLink'
 
 const classes = 'flex flex-col justify-center items-center' as const
+const ulClass = 'flex flex-col gap-2 list-disc text-sm' as const
 
 export default function ShowCase() {
   return (
     <Layout className="gap-10 mt-10">
       <section className={classes}>
         <h2 className="text-2xl text-center mb-4">Tabletop RPGs</h2>
-        <ul className="flex flex-col gap-2 list-disc text-sm">
+        <ul className={ulClass}>
           <li>
             <OuterLink
               url="https://fluxfall.thegame.tools/"
@@ -30,21 +31,21 @@ export default function ShowCase() {
       <section className={classes}>
         <h2 className="text-2xl text-center mb-4">Boardgames</h2>
         Coming Soon...
-        {/* <ul className="list-disc">
+        {/* <ul className={ulClass}>
           <li></li>
         </ul> */}
       </section>
       <section className={classes}>
         <h2 className="text-2xl text-center mb-4">Wargames</h2>
         Coming Soon...
-        {/* <ul className="list-disc">
+        {/* <ul className={ulClass}>
           <li></li>
         </ul> */}
       </section>
       <section className={classes}>
         <h2 className="text-2xl text-center mb-4">Other</h2>
         Coming Soon...
-        {/* <ul className="list-disc">
+        {/* <ul className={ulClass}>
           <li></li>
         </ul> */}
       </section>
