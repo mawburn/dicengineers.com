@@ -19,6 +19,7 @@ export const Layout = ({ className, children }: PropsWithChildren<LayoutProps>) 
         'flex-col',
         'px-4 md:px-0',
         'w-full',
+        'h-full',
         className
       )}
     >

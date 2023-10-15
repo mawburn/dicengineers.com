@@ -6,6 +6,7 @@ export const Overlay = () => (
   <a
     href="https://discord.gg/U4kB82phwJ"
     rel="noopener noreferrer"
+    target="_blank"
     className={cn(
       'absolute',
       'inline-block',
