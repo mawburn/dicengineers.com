@@ -1,4 +1,4 @@
-import { Pointer } from 'lucide-react'
+import { ArrowBigRight, Pointer } from 'lucide-react'
 import Image from 'next/image'
 import { cn } from 'src/lib/cn'
 import { DISCORD } from 'src/lib/constants'
@@ -11,7 +11,7 @@ export const Overlay = () => (
     className={cn(
       'absolute',
       'inline-block',
-      'md:top-[450px]',
+      'md:top-1/3',
       'xs:left-0 md:left-1/5',
       'mt-52 md:mt-0',
       'mx-4',
@@ -31,7 +31,7 @@ export const Overlay = () => (
       Connect with other engineers &amp; designers with a passion for tabletop gaming
     </h2>
     <span className="flex w-full p-2 justify-end">
-      <Pointer className="rotate-90 mr-3" strokeWidth={3} />
+      <ArrowBigRight size={32} className="mr-3" />
       <Image
         className="iconWobble drop-shadow"
         src="/discord-mark-white.svg"

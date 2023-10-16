@@ -24,10 +24,13 @@ const items: Item[] = [
   { title: 'Visual Studio Code', url: 'vsc.svg' },
   { title: 'Figma', url: 'figma.svg' },
   { title: 'Ruby on Rails', url: 'rails.svg' },
+  { title: 'GoLang', url: 'golang.svg' },
+  { title: 'TailwindCSS', url: 'tailwind.svg' },
+  { title: 'NextJS', url: 'nextjs.svg' },
 ]
 
 export const Info = () => (
-  <aside className="flex flex-col gap-8 px-4 pt-4 min-w-[15rem] md:pt-14 grow md:w-40 items-center">
+  <aside className="flex flex-col gap-8 px-4 pt-4 min-w-prose md:pt-14 grow md:w-40 items-center">
     <section className="flex flex-col items-center">
       <h2 className="flex gap-2 text-center text-2xl pb-2">
         Join us! <MessagesSquare size={28} />
@@ -43,6 +46,22 @@ export const Info = () => (
       <p className="text-center text-sm">
         We’re a community of passionate creators. Not only do we adore tabletop games, but we also
         thrive on crafting innovative tools and additions for our gaming experiences.
+      </p>
+    </section>
+    <Divider className="my-0" />
+    <section>
+      <h2 className="flex justify-center items-center gap-2 text-2xl pb-2">
+        Pick your poison <Image src="/poison.svg" width={28} height={42} alt="Poison Icon" />
+      </h2>
+      <p className="text-center text-sm">
+        Whether you’re a newbie developer smitten with <strong>D&D</strong>, a veteran immersed in{' '}
+        <strong>Warhammer 40k Harlequins</strong>, or a hobbyist designer captivated by{' '}
+        <strong>Magic: The Gathering</strong>... if you love meshing your hobbies, we’re the spot
+        you’ve been searching for.
+      </p>
+      <p className="text-center text-sm mt-2">
+        We’re an inclusive community welcoming all skill levels and backgrounds. Whether you need
+        help, support, or just a chat, we’re here for you.
       </p>
     </section>
     <Divider className="my-0" />

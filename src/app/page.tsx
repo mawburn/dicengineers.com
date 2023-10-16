@@ -8,16 +8,8 @@ export default function Home() {
   return (
     <Layout className="md:flex-row md:justify-between flex-wrap gap-4">
       <Aside />
-      <section className="flex flex-col justify-center grow">
-        <Image
-          src="/center.webp"
-          width={480}
-          height={480}
-          alt="Dice Engine"
-          placeholder="blur"
-          blurDataURL="/center-blur.webp"
-          loading="eager"
-        />
+      <section className="flex flex-col justify-start grow">
+        <Image src="/center.webp" width={480} height={480} alt="Dice Engine" loading="eager" />
         <Overlay />
       </section>
       <Info />
