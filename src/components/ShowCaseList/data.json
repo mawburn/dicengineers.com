@@ -106,7 +106,7 @@
     {
       "name": "Card Hands List",
       "url": "https://foundryvtt.com/packages/card-hands-list",
-      "description": "Card Hands List is a system-neutral Foundry VTT module, offering quick access to owned Card Hands via a collapsible list integrated seamlessly with the core UI.",
+      "description": "Card Hands List is a system-neutral FoundryVTT module, offering quick access to owned Card Hands via a collapsible list integrated seamlessly with the core UI.",
       "author": {
         "name": "Kristian Serrano",
         "url": "https://immaterialplane.com/"
