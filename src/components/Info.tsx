@@ -27,6 +27,7 @@ const items: Item[] = [
   { title: 'GoLang', url: 'golang.svg' },
   { title: 'TailwindCSS', url: 'tailwind.svg' },
   { title: 'NextJS', url: 'nextjs.svg' },
+  { title: 'Angular', url: 'angular.svg' },
 ]
 
 export const Info = () => (
