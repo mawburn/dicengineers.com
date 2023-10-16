@@ -1,0 +1,128 @@
+{
+  "Tabletop RPGs": [
+    {
+      "name": "Fluxfall Horizon Random Generators",
+      "url": "https://fluxfall.thegame.tools/",
+      "description": "Random generators for Fluxfall Horizon, a PbtA game by Dave Thaumavore",
+      "author": {
+        "name": "mawburn",
+        "url": "https://mawburn.com"
+      },
+      "games": [
+        "Fluxfall Horizon",
+        "PbtA"
+      ]
+    },
+    {
+      "name": "Across a Thousand Dead Worlds - Data",
+      "url": "https://github.com/mawburn/across-a-thousand-dead-worlds-data",
+      "description": "A data repository for Across a Thousand Dead Worlds by Blackoath Entertainment",
+      "author": {
+        "name": "mawburn",
+        "url": "https://mawburn.com"
+      },
+      "games": [
+        "Across a Thousand Dead Worlds",
+        "OSR"
+      ]
+    },
+    {
+      "name": "Central Supply Catalog",
+      "url": "https://trav-csc.com/",
+      "description": "The Central Supply Catalog, inspired by the 1970s Traveller SFRPG, has evolved over time; this app aims to support and give back to its dedicated community.",
+      "author": {
+        "name": "CodeMonki",
+        "url": "https://github.com/code-monki"
+      },
+      "games": [
+        "Traveller"
+      ]
+    },
+    {
+      "name": "Mythic Space Sector Generator",
+      "url": "https://code-monki.github.io/mythic-space-sector-generator/",
+      "description": "A random sector generator for the Mythic Space TTRPG by LaCara Games",
+      "author": {
+        "name": "CodeMonki",
+        "url": "https://github.com/code-monki"
+      },
+      "games": [
+        "Mythic Space"
+      ]
+    },
+    {
+      "name": "Savage Worlds Dice Roller",
+      "url": "https://immaterialplane.com/apps/swdr/",
+      "description": "Inspired by the former Savage Worlds Dice Roller app, this web-based tool rolls dice and counts raises above the Target Number.",
+      "author": {
+        "name": "Kristian Serrano",
+        "url": "https://immaterialplane.com/"
+      },
+      "games": [
+        "Savage Worlds"
+      ]
+    },
+    {
+      "name": "Savage Worlds Raise Calculator",
+      "url": "https://immaterialplane.com/apps/raises/",
+      "description": "Determine your raises quickly after a roll.",
+      "author": {
+        "name": "Kristian Serrano",
+        "url": "https://immaterialplane.com/"
+      },
+      "games": [
+        "Savage Worlds"
+      ]
+    },
+    {
+      "name": "Fantasy Companion Treasure Generator",
+      "url": "https://immaterialplane.com/apps/treasure/",
+      "description": "Crafted from the treasure tables in the Savage Worlds Fantasy Companion.",
+      "author": {
+        "name": "Kristian Serrano",
+        "url": "https://immaterialplane.com/"
+      },
+      "games": [
+        "Savage Worlds",
+        "Savage Worlds Fantasy Companion"
+      ]
+    }
+  ],
+  "Boardgames": [],
+  "Wargames": [],
+  "VTT Addons": [
+    {
+      "name": "SWADE Item Tables",
+      "url": "https://foundryvtt.com/packages/swade-item-tables",
+      "description": "SWADE Item Tables is a FoundryVTT module displaying Savage Worlds items in table format, allowing direct viewing and dragging to the Actor's sheet.",
+      "author": {
+        "name": "Kristian Serrano",
+        "url": "https://immaterialplane.com/"
+      },
+      "games": [
+        "SWADE"
+      ]
+    },
+    {
+      "name": "Card Hands List",
+      "url": "https://foundryvtt.com/packages/card-hands-list",
+      "description": "Card Hands List is a system-neutral Foundry VTT module, offering quick access to owned Card Hands via a collapsible list integrated seamlessly with the core UI.",
+      "author": {
+        "name": "Kristian Serrano",
+        "url": "https://immaterialplane.com/"
+      },
+      "games": []
+    },
+    {
+      "name": "Ghosts I-IV by Nine Inch Nails",
+      "url": "https://foundryvtt.com/packages/nin-ghosts-i-iv",
+      "description": "Ghosts I-IV is a Nine Inch Nails atmospheric audio collection from 2008, offered as a module with a playlist and liner notes, ideal for enhancing RPGs with its diverse, ambient moods.",
+      "author": {
+        "name": "Kristian Serrano",
+        "url": "https://immaterialplane.com/"
+      },
+      "games": []
+    }
+  ],
+  "Other": []
+}

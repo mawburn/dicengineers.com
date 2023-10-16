@@ -13,7 +13,7 @@ module.exports = {
         darkPrimary: '#15161B',
         darken: 'rgba(21, 22, 27, .75)',
         light: '#FDFDFD',
-        primary: '#68ACDD',
+        primary: '#951D3F',
         primaryDark: '#578CB2',
         secondary: '#165DC0',
         discord: '#5765F2',
