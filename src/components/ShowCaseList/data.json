@@ -122,6 +122,15 @@
         "url": "https://immaterialplane.com/"
       },
       "games": []
+    },
+    {
+      "name": "User Latency",
+      "url": "https://foundryvtt.com/packages/user-latency",
+      "description": "A small module for FoundryVTT that adds user latency (pings) to the user list",
+      "author": {
+        "name": "mawburn",
+        "url": "https://mawburn.com"
+      }
     }
   ],
   "Other": []
