@@ -9,7 +9,7 @@ export const PageHeader = ({}: PageHeaderProps) => (
     <Link href="/" className="flex justify-center items-center">
       <Image
         className="pr-2"
-        src="/de.svg"
+        src="/upperIcon.webp"
         width={42}
         height={42}
         alt="Dicengineers Logo"
