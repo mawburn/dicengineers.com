@@ -9,7 +9,7 @@ export default function Home() {
     <Layout className="md:flex-row md:justify-between flex-wrap gap-4">
       <Aside />
       <section className="flex flex-col justify-start grow">
-        <Image src="/center.webp" width={480} height={480} alt="Dice Engine" loading="eager" />
+        <Image src="/de.webp" width={480} height={480} alt="Dice Engine" loading="eager" />
         <Overlay />
       </section>
       <Info />
