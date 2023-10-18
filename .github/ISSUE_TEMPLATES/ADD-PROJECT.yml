@@ -1,7 +1,7 @@
 name: Add Projects
 description: Add your project(s) to the dicengineers.com/showcase site! Backlinks always help.
 title: "Add Project Request"
-labels: ["add project"]
+labels: []
 assignees:
   - mawburn
 body:
