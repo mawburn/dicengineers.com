@@ -131,6 +131,18 @@
         "name": "mawburn",
         "url": "https://mawburn.com"
       }
+    },
+    {
+      "name": "SWADE for Foundry",
+      "url": "https://foundryvtt.com/packages/swade",
+      "description": "The official rules implementation of Savage Worlds Adventure Edition for FoundryVTT",
+      "author": {
+        "name": "FloRadical",
+        "url": "https://github.com/FloRad"
+      },
+      "games": [
+        "SWADE"
+      ]
     }
   ],
   "Other": []
