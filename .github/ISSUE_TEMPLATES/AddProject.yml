@@ -1,0 +1,85 @@
+name: Add Projects
+description: Add your project(s) to the dicengineers.com/showcase site! Backlinks always help.
+title: "Add Project Request"
+labels: ["add project"]
+assignees:
+  - mawburn
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Your name
+      placeholder: Put your name, discord name, or github name here
+  - type: input
+    id: contact
+    attributes:
+      label: Your personal page
+      description: If you have a personal site, social media, or github you want linked, put it here
+      placeholder: (no emails)
+    validations:
+      required: false
+  - type: textarea
+    id: ttrpg
+    attributes:
+      label: TTRPG (optional)
+      description: TTRPG Related Projects
+      placeholder: >
+        Use this format, remove this line
+        - Project Name
+          - Project Url
+          - Short description. 1 succinct sentence is best or a longer one I'l run through ChatGPT.
+          - Icon (optional)
+    validations:
+      required: true
+  - type: textarea
+    id: boardgames
+    attributes:
+      label: Boardgames (optional)
+      description: Boardgame / Card Game Related Projects
+      placeholder: >
+        Use this format, remove this line
+        - Project Name
+          - Project Url
+          - Short description. 1 succinct sentence is best or a longer one I'l run through ChatGPT.
+          - Icon (optional)
+    validations:
+      required: true
+  - type: textarea
+    id: wargames
+    attributes:
+      label: Wargames (optional)
+      description: Wargame/Skirmish Game Related Projects
+      placeholder: >
+        Use this format, remove this line
+        - Project Name
+          - Project Url
+          - Short description. 1 succinct sentence is best or a longer one I'l run through ChatGPT.
+          - Icon (optional)
+    validations:
+      required: true
+  - type: textarea
+    id: vtt
+    attributes:
+      label: VTT Related Projects (optional)
+      description: Virtual Tabletop Related Projects, plugins, extensions, etc.
+      placeholder: >
+        Use this format, remove this line
+        - Project Name
+          - Project Url
+          - Short description. 1 succinct sentence is best or a longer one I'l run through ChatGPT.
+          - Icon (optional)
+    validations:
+      required: true
+  - type: textarea
+    id: other
+    attributes:
+      label: Other Stuff (optional)
+      description: Anything that didn't fall into one of the above
+      placeholder: >
+        Use this format, remove this line
+        - Project Name
+          - Project Url
+          - Short description. 1 succinct sentence is best or a longer one I'l run through ChatGPT.
+          - Icon (optional)
+    validations:
+      required: true
