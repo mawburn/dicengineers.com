@@ -1,18 +1,21 @@
-[
-  {
-    "date": "October 16, 2023",
-    "summary": "- **code_monki** shares about their hobby projects, Traveller Central Supply Catalog and Mythic Space Sector Generator.\n- **mawburn** expresses interest in these projects and asks for details about the Mythic Space generator, plans to add them to a site. \n- **code_monki** is also developing plugins for the Obsidian note-taking app and learning Dart/Flutter.\n- **mawburn** shares personal experiences with different tools like Obsidian, LoqSeq, and GitHub. They also provide links to various YouTube videos.\n- Both discuss their geographical locations along with other users like **Synyster328**, who is from Fargo, ND.\n- Conversation shifts to discussing different RPG systems such as GURPS, Traveller, Mutant: Year Zero etc., and their respective features. \n- The discussion then moves on to UI design of TTRPG tools with mentions of resources like Traveller Wiki and Traveller Map.\n- Conversation transitions into discussing programming languages/frameworks including Angular, Vue.js React.js etc., with users expressing varying preferences. \n- Several other users join the conversation including **corporat**, who works with publishers on Foundry VTT content; **kristianserrano**, who provides links to his online tools;  **floradical**, an Angular developer;  and others sharing insights on tech used in tabletop gaming industry.  \n"
-  },
-  {
-    "date": "October 17, 2023",
-    "summary": "- **Synyster328** announces a beta for his rules chatbot for Android users.\n- **mawburn** and **snakeeyesnc** discuss their locations, both being in North Carolina.\n- **mawburn** mentions someone who does Ruby talks based on D&D. He also discusses various games and programming languages with **rolentle**, including Scala, Starfinder, Typescript, Traveller and Fate Sharp.\n- **notaferret** joins the chat and mentions his project of digitizing board games for web. \n- Conversation between **mawburn**, **snakeeyesnc**, and others about their work as remote developers. \n- Discussion about backing X-Men Dice Throne game led by  **mawburn**."
-  },
-  {
-    "date": "October 18, 2023",
-    "summary": "- **floradical** and **mawburn** discuss the idea of assigning roles in their chat community, possibly based on favorite programming languages.\n- **mawburn** shares his experience as a community creator and how he started this particular server after connecting with someone over a board game app.\n- They continue discussing possible roles for users, leaning towards broad categories like Backend/Frontend/Fullstack. \n- The discussion turns to various projects they're working on, including **floradical's** LoreWeaver - a self-hosted worldbuilding tool - and potential technologies to use for it. \n- They also discuss different programming languages, their strengths and weaknesses, with an emphasis on Python and Rust. \n- **Synyster328** joins the conversation sharing about his app using GPT-4 AI model.\n- After testing Synyster328's beta app, mawburn provides feedback regarding its UI design and color contrast issues for accessibility (a11y)."
-  },
-  {
-    "date": "October 19, 2023",
-    "summary": "- **perfect.6lue** is using boardgame.io for projects and finds it useful.\n- **Synyster328** hasn't heard of it but is interested.\n- **mawburn** has heard of it, doesn't remember much about it, but thinks the framework looks nice after looking at the docs. He also mentions Radix UI's changes and shares a link to its \"Primitives\" section.\n- **corporat** shares a link about Quest Portal raising funds and launching a subscription for tabletop role-playing games."
-  }
-]
+{
+  "lastId": 1164762182177800263,
+  "summaries": [
+    {
+      "date": "October 16, 2023",
+      "summary": "- **code_monki** shares about their hobby projects, Traveller Central Supply Catalog and Mythic Space Sector Generator.\n- **mawburn** expresses interest in these projects and asks for details about the Mythic Space generator, plans to add them to a site. \n- **code_monki** is also developing plugins for the Obsidian note-taking app and learning Dart/Flutter.\n- **mawburn** shares personal experiences with different tools like Obsidian, LoqSeq, and GitHub. They also provide links to various YouTube videos.\n- Both discuss their geographical locations along with other users like **Synyster328**, who is from Fargo, ND.\n- Conversation shifts to discussing different RPG systems such as GURPS, Traveller, Mutant: Year Zero etc., and their respective features. \n- The discussion then moves on to UI design of TTRPG tools with mentions of resources like Traveller Wiki and Traveller Map.\n- Conversation transitions into discussing programming languages/frameworks including Angular, Vue.js React.js etc., with users expressing varying preferences. \n- Several other users join the conversation including **corporat**, who works with publishers on Foundry VTT content; **kristianserrano**, who provides links to his online tools;  **floradical**, an Angular developer;  and others sharing insights on tech used in tabletop gaming industry.  \n"
+    },
+    {
+      "date": "October 17, 2023",
+      "summary": "- **Synyster328** announces a beta for his rules chatbot for Android users.\n- **mawburn** and **snakeeyesnc** discuss their locations, both being in North Carolina.\n- **mawburn** mentions someone who does Ruby talks based on D&D. He also discusses various games and programming languages with **rolentle**, including Scala, Starfinder, Typescript, Traveller and Fate Sharp.\n- **notaferret** joins the chat and mentions his project of digitizing board games for web. \n- Conversation between **mawburn**, **snakeeyesnc**, and others about their work as remote developers. \n- Discussion about backing X-Men Dice Throne game led by  **mawburn**."
+    },
+    {
+      "date": "October 18, 2023",
+      "summary": "- **floradical** and **mawburn** discuss the idea of assigning roles in their chat community, possibly based on favorite programming languages.\n- **mawburn** shares his experience as a community creator and how he started this particular server after connecting with someone over a board game app.\n- They continue discussing possible roles for users, leaning towards broad categories like Backend/Frontend/Fullstack. \n- The discussion turns to various projects they're working on, including **floradical's** LoreWeaver - a self-hosted worldbuilding tool - and potential technologies to use for it. \n- They also discuss different programming languages, their strengths and weaknesses, with an emphasis on Python and Rust. \n- **Synyster328** joins the conversation sharing about his app using GPT-4 AI model.\n- After testing Synyster328's beta app, mawburn provides feedback regarding its UI design and color contrast issues for accessibility (a11y)."
+    },
+    {
+      "date": "October 19, 2023",
+      "summary": "- **perfect.6lue** is using boardgame.io for projects and finds it useful.\n- **Synyster328** hasn't heard of it but is interested.\n- **mawburn** has heard of it, doesn't remember much about it, but thinks the framework looks nice after looking at the docs. He also mentions Radix UI's changes and shares a link to its \"Primitives\" section.\n- **corporat** shares a link about Quest Portal raising funds and launching a subscription for tabletop role-playing games."
+    }
+  ]
+}
