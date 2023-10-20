@@ -1,126 +1,119 @@
 import fetch from 'node-fetch'
 import ExtApi from 'openai'
-import messagesJson from './data.json'
+import { getData } from 'src/lib/serverOnly/getData'
+import { upload } from 'src/lib/serverOnly/upload'
 
 const MAX_TOKENS = 81912
 
 export async function GET(req: Request) {
-  const apikey = req.headers.get('Authorization')
+  const authHeader = req.headers.get('authorization')
 
-  if (apikey !== process.env.KEY) {
-    return Response.json({ error: 'Not found' }, { status: 404 })
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return Response.json({
+      status: 404,
+    })
   }
 
-  // const result: any[] = []
+  const data = await getData('summaries')
 
-  // let lastId = 1163487291315073134
+  const result: any[] = []
 
-  // let end = false
+  let lastId = data.lastId
 
-  // while (!end) {
-  //   const res = await fetch(
-  //     `https://discord.com/api/channels/1163251543861100615/messages?after=${lastId}`,
-  //     {
-  //       headers: {
-  //         Authorization: `Bot ${process.env.DISCORD}`,
-  //       },
-  //     }
-  //   )
+  let end = false
 
-  //   if (res.status === 429) {
-  //     const retryAfter = res.headers.get('Retry-After')
-  //     if (retryAfter) {
-  //       await new Promise(resolve => setTimeout(resolve, Number(retryAfter)))
-  //       continue
-  //     }
-  //   }
+  while (!end) {
+    const res = await fetch(
+      `https://discord.com/api/channels/1163251543861100615/messages?after=${lastId}`,
+      {
+        headers: {
+          Authorization: `Bot ${process.env.DISCORD}`,
+        },
+      }
+    )
 
-  //   if (!res.ok) {
-  //     end = true
-  //     continue
-  //   }
+    if (res.status === 429) {
+      const retryAfter = res.headers.get('Retry-After')
+      if (retryAfter) {
+        await new Promise(resolve => setTimeout(resolve, Number(retryAfter)))
+        continue
+      }
+    }
 
-  //   const channel = (await res.json()) as any[]
+    if (!res.ok) {
+      end = true
+      continue
+    }
 
-  //   if (channel.length === 0) {
-  //     end = true
-  //     continue
-  //   }
+    const channel = (await res.json()) as any[]
 
-  //   result.push(...channel)
-  //   lastId = channel[channel.length - 1].id
-  // }
+    if (channel.length === 0) {
+      end = true
+      continue
+    }
 
-  // let dupeId = 0
+    result.push(...channel)
+    lastId = channel[channel.length - 1].id
+  }
 
-  // const grouped = result
-  //   .sort((a: any, b: any) => a.id - b.id)
-  //   .filter(obj => {
-  //     if (obj.id !== dupeId) {
-  //       dupeId = obj.id
-  //       return true
-  //     }
-  //     return false
-  //   })
-  //   .reduce((acc, obj) => {
-  //     const date = new Date(obj.timestamp)
-  //     const key = date.toLocaleDateString('en-US', {
-  //       month: 'long',
-  //       day: 'numeric',
-  //       year: 'numeric',
-  //     })
+  let dupeId = 0
+  let newLastId = 0
 
-  //     if (!acc[key]) {
-  //       acc[key] = []
-  //     }
+  const grouped = result
+    .sort((a: any, b: any) => a.id - b.id)
+    .filter(obj => {
+      if (obj.id !== dupeId) {
+        dupeId = obj.id
+        return true
+      }
+      return false
+    })
+    .reduce((acc, obj, i) => {
+      const date = new Date(obj.timestamp)
+      const key = date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
 
-  //     acc[key].push(`${obj.author.username}: ${obj.content}`)
+      if (!acc[key]) {
+        acc[key] = []
+      }
 
-  //     return acc
-  //   }, {})
+      acc[key].push(`${obj.author.username}: ${obj.content}`)
 
-  // const messages: Record<string, string[]> = {}
+      if (i === result.length - 1) {
+        newLastId = obj.id
+      }
 
-  // Object.keys(grouped).forEach(key => {
-  //   const _msg = grouped[key]
-  //     .join('\n')
-  //     .replace(/<[^>]*>|(\|\|)[^|]*(\|\|)/g, '')
-  //     .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
-
-  //   let tokens = _msg.split(' ')
-  //   const messageArray = []
-
-  //   while (tokens.length > MAX_TOKENS) {
-  //     const slice = tokens.slice(0, MAX_TOKENS)
-  //     messageArray.push(slice.join(' '))
-  //     tokens = tokens.slice(MAX_TOKENS)
-  //   }
-
-  //   if (tokens.length > 0) {
-  //     messageArray.push(tokens.join(' '))
-  //   }
-
-  //   messages[key] = messageArray as string[]
-  // })
+      return acc
+    }, {})
 
   const extApi = new ExtApi({
     apiKey: process.env.API_KEY,
     maxRetries: 10,
   })
 
-  const summary: { date: string; summary: string }[] = []
-
-  const messages = messagesJson as Record<string, string[]>
+  const summaries: { date: string; summary: string }[] = []
 
   let start = true
 
-  for (const k in messages) {
+  for (const k in grouped) {
     if (!start) {
       await new Promise(resolve => setTimeout(resolve, 10000))
     }
+
     start = false
 
-    const messageArr = messages[k]
+    const shortened = grouped[k].split(' ')
+    const messageArr: string[] = []
+
+    let index = 0
+
+    while (index < shortened.length) {
+      messageArr.push(shortened.slice(index, index + MAX_TOKENS).join(' '))
+      index += MAX_TOKENS
+    }
 
     for (const content of messageArr) {
       const aiMessages: any[] = [
@@ -145,10 +138,14 @@ export async function GET(req: Request) {
       })
 
       if (aiRes.choices[0].message.content) {
-        summary.push({ date: k, summary: aiRes.choices[0].message.content })
+        summaries.push({ date: k, summary: aiRes.choices[0].message.content })
       }
     }
   }
 
-  return Response.json(summary)
+  const newData = { lastId: newLastId, summaries }
+
+  upload(JSON.stringify(newData), 'summaries')
+
+  return Response.json(newData)
 }

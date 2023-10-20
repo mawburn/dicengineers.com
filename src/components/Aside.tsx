@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import fetch from 'node-fetch'
 import { DISCORD } from 'src/lib/constants'
-import { getPosts } from 'src/lib/serverOnly/getPosts'
-import { uploadPosts } from 'src/lib/serverOnly/uploadPosts'
+import { getData as getPosts } from 'src/lib/serverOnly/getData'
+import { upload } from 'src/lib/serverOnly/upload'
 
 import { Divider } from './Divider'
 
@@ -36,7 +36,7 @@ async function getData() {
     next: { revalidate: 3600 },
   })
 
-  const posts = getPosts()
+  const posts = getPosts('data')
 
   const [discordRes, redditRes, postsRes] = await Promise.allSettled([discord, reddit, posts])
 
@@ -64,7 +64,7 @@ async function getData() {
       data.redditCount = newIds.size
 
       if (newIds.size > 0) {
-        uploadPosts(JSON.stringify([...Array.from(ids), ...Array.from(newIds)]))
+        upload(JSON.stringify([...Array.from(ids), ...Array.from(newIds)]), 'data')
       }
     }
   }

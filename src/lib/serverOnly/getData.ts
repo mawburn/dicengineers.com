@@ -3,7 +3,7 @@ import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 const endpoint = 'https://nyc3.digitaloceanspaces.com'
 
-export const getPosts = async () => {
+export const getData = async (file: string) => {
   const s3Client = new S3Client({
     endpoint,
     forcePathStyle: false,
@@ -16,7 +16,7 @@ export const getPosts = async () => {
 
   const params = {
     Bucket: 'tabletopcdn',
-    Key: 'dice/data.json',
+    Key: `dice/${file}.json`,
   }
 
   const getObject = async () => {
