@@ -1,0 +1,7 @@
+.summary > ul {
+  @apply list-disc;
+
+  & > li {
+    @apply mb-2;
+  }
+}
