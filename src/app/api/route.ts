@@ -100,7 +100,7 @@ export async function GET(req: Request) {
 
   for (const k in grouped) {
     if (!start) {
-      await new Promise(resolve => setTimeout(resolve, 10000))
+      await new Promise(resolve => setTimeout(resolve, 1000))
     }
 
     start = false
