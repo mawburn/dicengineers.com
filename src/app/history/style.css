@@ -4,4 +4,8 @@
   & > li {
     @apply mb-2;
   }
+
+  strong {
+    @apply font-bold text-[#ffe99b];
+  }
 }

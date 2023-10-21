@@ -9,11 +9,11 @@ export const revalidate = 43200
 
 export const metadata: Metadata = {
   title: 'Message History - Dicengineers',
-  description: 'Dicengineers Message History',
+  description: 'Dicengineers Message Summary',
   openGraph: {
     images: [
-      { url: '/showcaseog.webp', width: 1600, height: 800, alt: 'Dicengineers.com Showcase' },
-      { url: '/showcaseog.jpg', width: 1600, height: 800, alt: 'Dicengineers.com Showcase' },
+      { url: '/messages.webp', width: 1600, height: 800, alt: 'Dicengineers.com Message Summary' },
+      { url: '/message.jpg', width: 1600, height: 800, alt: 'Dicengineers.com Message Summary' },
     ],
     url: 'https://dicengineers.com',
   },
