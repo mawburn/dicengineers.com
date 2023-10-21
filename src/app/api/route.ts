@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 import ExtApi from 'openai'
 import { getData } from 'src/lib/serverOnly/getData'
 import { upload } from 'src/lib/serverOnly/upload'
+import { compareAsc, parse } from 'date-fns'
 
 import type { Response as FetchResponse } from 'node-fetch'
 
@@ -43,11 +44,13 @@ export async function GET(req: Request) {
   const data = (await getData('summaries')) as JsonData
   const messages = await fetchDiscordMessages(data.lastId || 1163466354339369100)
   const groupedMessages = groupMessagesByDate(messages)
-  const summaries = await generateSummaries(groupedMessages, data)
+  const summariesRaw = await generateSummaries(groupedMessages, data)
+
+  const summaries = sortByDate([...data.summaries, ...summariesRaw])
 
   const newData = {
     lastId: messages[messages.length - 1].id,
-    summaries: [...data.summaries, ...summaries],
+    summaries,
   }
 
   upload(JSON.stringify(newData), 'summaries')
@@ -190,4 +193,12 @@ async function handleRateLimit(res: FetchResponse) {
   if (retryAfter) {
     await new Promise(resolve => setTimeout(resolve, Number(retryAfter)))
   }
+}
+
+function sortByDate(summaries: Summary[]): Summary[] {
+  return summaries.sort((a, b) => {
+    const dateA = parse(a.date, 'MMMM d, yyyy', new Date())
+    const dateB = parse(b.date, 'MMMM d, yyyy', new Date())
+    return compareAsc(dateA, dateB)
+  })
 }
