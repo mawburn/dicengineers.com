@@ -1,9 +1,35 @@
+import { RESTPostAPIChannelMessageJSONBody } from 'discord-api-types/v10'
 import fetch from 'node-fetch'
 import ExtApi from 'openai'
 import { getData } from 'src/lib/serverOnly/getData'
 import { upload } from 'src/lib/serverOnly/upload'
 
-const MAX_TOKENS = 81912
+import type { Response as FetchResponse } from 'node-fetch'
+
+const MAX_TOKENS = 81912 as const
+
+interface Summary {
+  date: string
+  summary: string
+}
+
+interface JsonData {
+  lastId: number
+  summaries: Summary[]
+}
+
+interface Message extends RESTPostAPIChannelMessageJSONBody {
+  id: number
+  timestamp: string
+  author: {
+    username: string
+  }
+}
+
+interface AIMessage {
+  role: 'user' | 'system'
+  content: string
+}
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
@@ -14,30 +40,38 @@ export async function GET(req: Request) {
     })
   }
 
-  const data = await getData('summaries')
+  const data = (await getData('summaries')) as JsonData
+  const messages = await fetchDiscordMessages(data.lastId || 1163466354339369100)
+  const groupedMessages = groupMessagesByDate(messages)
+  const summaries = await generateSummaries(groupedMessages, data)
 
-  const result: any[] = []
+  const newData = {
+    lastId: messages[messages.length - 1].id,
+    summaries: [...data.summaries, ...summaries],
+  }
 
-  let lastId = data.lastId
+  upload(JSON.stringify(newData), 'summaries')
 
+  return Response.json(newData)
+}
+
+async function fetchDiscordMessages(lastId: number) {
+  const result: Message[] = []
   let end = false
 
   while (!end) {
-    const res = await fetch(
+    const res = (await fetch(
       `https://discord.com/api/channels/1163251543861100615/messages?after=${lastId}`,
       {
         headers: {
           Authorization: `Bot ${process.env.DISCORD}`,
         },
       }
-    )
+    )) as FetchResponse
 
     if (res.status === 429) {
-      const retryAfter = res.headers.get('Retry-After')
-      if (retryAfter) {
-        await new Promise(resolve => setTimeout(resolve, Number(retryAfter)))
-        continue
-      }
+      await handleRateLimit(res)
+      continue
     }
 
     if (!res.ok) {
@@ -45,8 +79,7 @@ export async function GET(req: Request) {
       continue
     }
 
-    const channel = (await res.json()) as any[]
-
+    const channel = (await res.json()) as Message[]
     if (channel.length === 0) {
       end = true
       continue
@@ -56,19 +89,14 @@ export async function GET(req: Request) {
     lastId = channel[channel.length - 1].id
   }
 
-  let dupeId = 0
-  let newLastId = 0
+  return result
+    .sort((a, b) => a.id - b.id)
+    .filter((obj, index, self) => self.findIndex(t => t.id === obj.id) === index)
+}
 
-  const grouped = result
-    .sort((a: any, b: any) => a.id - b.id)
-    .filter(obj => {
-      if (obj.id !== dupeId) {
-        dupeId = obj.id
-        return true
-      }
-      return false
-    })
-    .reduce((acc, obj, i) => {
+function groupMessagesByDate(messages: Message[]) {
+  return messages.reduce(
+    (acc, obj: Message) => {
       const date = new Date(obj.timestamp)
       const key = date.toLocaleDateString('en-US', {
         month: 'long',
@@ -81,14 +109,13 @@ export async function GET(req: Request) {
       }
 
       acc[key].push(`${obj.author.username}: ${obj.content}`)
-
-      if (i === result.length - 1) {
-        newLastId = obj.id
-      }
-
       return acc
-    }, {})
+    },
+    {} as Record<string, string[]>
+  )
+}
 
+async function generateSummaries(grouped: Record<string, string[]>, data: JsonData) {
   const extApi = new ExtApi({
     apiKey: process.env.API_KEY,
     maxRetries: 10,
@@ -96,27 +123,18 @@ export async function GET(req: Request) {
 
   const summaries: { date: string; summary: string }[] = []
 
-  let start = true
-
   for (const k in grouped) {
-    if (!start) {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-    }
-
-    start = false
-
-    const shortened = grouped[k].split(' ')
+    const messages = grouped[k].join('\n').split(' ')
     const messageArr: string[] = []
-
     let index = 0
 
-    while (index < shortened.length) {
-      messageArr.push(shortened.slice(index, index + MAX_TOKENS).join(' '))
+    while (index < messages.length) {
+      messageArr.push(messages.slice(index, index + MAX_TOKENS).join(' '))
       index += MAX_TOKENS
     }
 
     for (const content of messageArr) {
-      const aiMessages: any[] = [
+      const aiMessages: AIMessage[] = [
         {
           role: 'system',
           content:
@@ -138,14 +156,38 @@ export async function GET(req: Request) {
       })
 
       if (aiRes.choices[0].message.content) {
-        summaries.push({ date: k, summary: aiRes.choices[0].message.content })
+        const idx = data.summaries.findIndex((s: Summary) => s.date === k)
+
+        if (idx > -1) {
+          const overlap = findOverlap(data.summaries[idx].summary, aiRes.choices[0].message.content)
+          const nonOverlappingPart = aiRes.choices[0].message.content.substring(overlap.length)
+          data.summaries[idx].summary += nonOverlappingPart
+        } else {
+          summaries.push({ date: k, summary: aiRes.choices[0].message.content })
+        }
       }
     }
   }
 
-  const newData = { lastId: newLastId, summaries }
+  return summaries
+}
 
-  upload(JSON.stringify(newData), 'summaries')
+function findOverlap(str1: string, str2: string): string {
+  let overlap = ''
 
-  return Response.json(newData)
+  for (let i = 0; i < str1.length; i++) {
+    const substring = str1.substring(i)
+    if (str2.startsWith(substring)) {
+      overlap = substring
+      break
+    }
+  }
+  return overlap
+}
+
+async function handleRateLimit(res: FetchResponse) {
+  const retryAfter = res.headers.get('Retry-After')
+  if (retryAfter) {
+    await new Promise(resolve => setTimeout(resolve, Number(retryAfter)))
+  }
 }
