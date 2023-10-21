@@ -8,7 +8,7 @@ import { getData as getSummaries } from 'src/lib/serverOnly/getData'
 export const revalidate = 43200
 
 export const metadata: Metadata = {
-  title: 'Message History - Dicengineers',
+  title: 'Message Summary - Dicengineers',
   description: 'Dicengineers Message Summary',
   openGraph: {
     images: [
