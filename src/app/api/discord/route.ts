@@ -1,8 +1,8 @@
-import { addHours, compareAsc, formatISO, parse, parseISO, startOfDay } from 'date-fns'
-import type { DiscordMessage } from 'src/app/types/Discord'
-import type { MessageSummary } from 'src/app/types/Messages'
+import { addHours, compareAsc, formatISO, parseISO, startOfDay } from 'date-fns'
 import { getData } from 'src/lib/serverOnly/getData'
 import { upload } from 'src/lib/serverOnly/upload'
+
+import type { DiscordMessage, DiscordMessages } from 'src/app/types/Discord'
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
@@ -13,26 +13,28 @@ export async function GET(req: Request) {
     })
   }
 
-  const data = (await getData('discord')) as DiscordMessage
-  const messageData = await fetchDiscordMessages(1163466354339369100)
+  const data = (await getData('discord')) as DiscordMessages
+  const messageData = await fetchDiscordMessages(data.lastId)
   const groupedMessages = groupMessagesByDate(messageData)
 
   upload(JSON.stringify({ ...data, ...groupedMessages, lastId: groupedMessages.lastId }), 'discord')
+
+  Response.json({ ...data, ...groupedMessages, lastId: groupedMessages.lastId })
 }
 
 async function fetchDiscordMessages(lastId: number) {
+  let newLastId = lastId
   const result: DiscordMessage[] = []
   let end = false
 
   while (!end) {
-    const res = await fetch(
-      `https://discord.com/api/channels/1163251543861100615/messages?after=${lastId}`,
-      {
-        headers: {
-          Authorization: `Bot ${process.env.DISCORD}`,
-        },
-      }
-    )
+    const url = `https://discord.com/api/channels/1163251543861100615/messages?after=${newLastId}`
+
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bot ${process.env.DISCORD!}`,
+      },
+    })
 
     if (res.status === 429) {
       await handleRateLimit(res)
@@ -50,6 +52,8 @@ async function fetchDiscordMessages(lastId: number) {
       continue
     }
 
+    newLastId = channel[channel.length - 1].id
+    console.log(newLastId)
     result.push(...channel)
   }
 
@@ -87,10 +91,17 @@ function groupMessagesByDate(messages: DiscordMessage[]) {
         }
 
         lastId = obj.id
-        acc[key].push(`${obj.author.username}: ${obj.content}`)
+
+        acc[key].push({
+          id: obj.id,
+          timestamp: formatISO(date),
+          content: obj.content,
+          author: obj.author,
+        })
+
         return acc
       },
-      {} as Record<string, string[]>
+      {} as Record<string, DiscordMessage[]>
     )
 
   return {
