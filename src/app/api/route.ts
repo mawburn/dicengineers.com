@@ -1,9 +1,9 @@
+import { addHours, compareAsc, formatISO, parse, startOfDay } from 'date-fns'
 import { RESTPostAPIChannelMessageJSONBody } from 'discord-api-types/v10'
 import fetch from 'node-fetch'
 import ExtApi from 'openai'
 import { getData } from 'src/lib/serverOnly/getData'
 import { upload } from 'src/lib/serverOnly/upload'
-import { compareAsc, parse } from 'date-fns'
 
 import type { Response as FetchResponse } from 'node-fetch'
 
@@ -42,7 +42,7 @@ export async function GET(req: Request) {
   }
 
   const data = (await getData('summaries')) as JsonData
-  const messages = await fetchDiscordMessages(data.lastId || 1163466354339369100)
+  const messages = await fetchDiscordMessages(1163466354339369100)
   const groupedMessages = groupMessagesByDate(messages)
   const summariesRaw = await generateSummaries(groupedMessages, data)
 
@@ -100,7 +100,7 @@ async function fetchDiscordMessages(lastId: number) {
 function groupMessagesByDate(messages: Message[]) {
   return messages.reduce(
     (acc, obj: Message) => {
-      const date = new Date(obj.timestamp)
+      const date = addHours(new Date(obj.timestamp), -5)
       const key = date.toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
@@ -196,9 +196,17 @@ async function handleRateLimit(res: FetchResponse) {
 }
 
 function sortByDate(summaries: Summary[]): Summary[] {
-  return summaries.sort((a, b) => {
-    const dateA = parse(a.date, 'MMMM d, yyyy', new Date())
-    const dateB = parse(b.date, 'MMMM d, yyyy', new Date())
-    return compareAsc(dateA, dateB)
-  })
+  const now = startOfDay(addHours(new Date(), -5))
+
+  return summaries
+    .map(s => ({
+      ...s,
+      date: formatISO(addHours(parse(s.date, 'MMMM d, yyyy', new Date()), -5)),
+    }))
+    .filter(s => startOfDay(parse(s.date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", new Date())) < now)
+    .sort((a, b) => {
+      const dateA = parse(a.date, 'MMMM d, yyyy', new Date())
+      const dateB = parse(b.date, 'MMMM d, yyyy', new Date())
+      return compareAsc(dateA, dateB)
+    })
 }
