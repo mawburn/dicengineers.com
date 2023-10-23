@@ -71,7 +71,7 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
   for (const k in messages) {
     const newDate = parse(k, 'MMMM d, yyyy', new Date())
 
-    for (const content of messages[k]) {
+    for (const content in messages[k]) {
       const aiMessages: AIMessage[] = [
         {
           role: 'system',

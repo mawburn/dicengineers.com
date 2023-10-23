@@ -94,9 +94,9 @@ export const Aside = async () => {
             <span className="text-2xl">{total}</span>
             <span className="italic">Total users</span>
           </a>
-          <Link href="/history" className={`${countClasses} underline font-bold tracking-wider`}>
+          {/* <Link href="/history" className={`${countClasses} underline font-bold tracking-wider`}>
             Message Summary
-          </Link>
+          </Link> */}
         </>
       )}
       <Divider className="max-w-[50%] md:mr-32" />
