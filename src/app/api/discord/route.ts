@@ -19,7 +19,7 @@ export async function GET(req: Request) {
 
   upload(JSON.stringify({ ...data, ...groupedMessages, lastId: groupedMessages.lastId }), 'discord')
 
-  Response.json({ ...data, ...groupedMessages, lastId: groupedMessages.lastId })
+  return Response.json({ ...data, ...groupedMessages, lastId: groupedMessages.lastId })
 }
 
 async function fetchDiscordMessages(lastId: number) {
