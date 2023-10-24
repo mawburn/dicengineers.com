@@ -10,7 +10,7 @@
     },
     {
       "path": "/api/reddit",
-      "schedule": "10 */8 * * *"
+      "schedule": "* 10 * * *"
     }
   ]
 }
