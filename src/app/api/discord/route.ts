@@ -53,7 +53,6 @@ async function fetchDiscordMessages(lastId: number) {
     }
 
     newLastId = channel[channel.length - 1].id
-    console.log(newLastId)
     result.push(...channel)
   }
 
@@ -77,6 +76,10 @@ function groupMessagesByDate(messages: DiscordMessage[]) {
     .sort((a, b) => compareAsc(parseISO(a.timestamp), parseISO(b.timestamp)))
     .reduce(
       (acc, obj: DiscordMessage) => {
+        if (!obj.content) {
+          return acc
+        }
+
         const date = addHours(new Date(obj.timestamp), -5)
         const key = date.toLocaleDateString('en-US', {
           month: 'long',

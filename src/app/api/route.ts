@@ -1,4 +1,4 @@
-import { parse } from 'date-fns'
+import { format, parse } from 'date-fns'
 import ExtApi from 'openai'
 import { getData } from 'src/lib/serverOnly/getData'
 import { upload } from 'src/lib/serverOnly/upload'
@@ -30,16 +30,19 @@ export async function GET(req: Request) {
 }
 
 function trimData(discord: DiscordMessages, summary: MessageSummary) {
-  const lastDate = parse(summary.lastDate, 'MMMM d, yyyy', new Date())
+  const lastDate = summary.lastDate
+    ? parse(summary.lastDate, 'MMMM d, yyyy', new Date())
+    : new Date(0)
+
   const dataToSummarize: Record<string, string[]> = {}
 
   Object.keys(discord.messages).forEach(k => {
     const date = parse(k, 'MMMM d, yyyy', new Date())
 
     if (date > lastDate) {
-      let idx = 0
-      const messageArr: string[] = []
       const messages = discord.messages[k].map(m => `${m.author.username}: ${m.content}`).join('\n')
+      const messageArr: string[] = []
+      let idx = 0
 
       while (idx < messages.length) {
         messageArr.push(
@@ -48,6 +51,7 @@ function trimData(discord: DiscordMessages, summary: MessageSummary) {
             .slice(idx, idx + MAX_TOKENS)
             .join(' ')
         )
+
         idx += MAX_TOKENS
       }
 
@@ -59,7 +63,7 @@ function trimData(discord: DiscordMessages, summary: MessageSummary) {
 }
 
 async function generateSummaries(messages: Record<string, string[]>, data: MessageSummary) {
-  let lastDate = parse(data.lastDate, 'MMMM d, yyyy', new Date())
+  let lastDate = data.lastDate ? parse(data.lastDate, 'MMMM d, yyyy', new Date()) : new Date(0)
 
   const extApi = new ExtApi({
     apiKey: process.env.API_KEY,
@@ -69,9 +73,9 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
   const summaries: Summary[] = []
 
   for (const k in messages) {
-    const newDate = parse(k, 'MMMM d, yyyy', new Date())
+    for (const content of messages[k]) {
+      const newDate = parse(k, 'MMMM d, yyyy', new Date())
 
-    for (const content in messages[k]) {
       const aiMessages: AIMessage[] = [
         {
           role: 'system',
@@ -104,7 +108,7 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
   }
 
   return {
-    lastDate,
+    lastDate: format(lastDate, 'MMMM d, yyyy'), // Convert the Date object back to a string
     summaries,
   }
 }
