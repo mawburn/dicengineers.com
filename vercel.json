@@ -3,6 +3,14 @@
     {
       "path": "/api/discord",
       "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api",
+      "schedule": "05 5 * * *"
+    },
+    {
+      "path": "/api/reddit",
+      "schedule": "10 */8 * * *"
     }
   ]
 }

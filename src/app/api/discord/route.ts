@@ -17,9 +17,17 @@ export async function GET(req: Request) {
   const messageData = await fetchDiscordMessages(data.lastId)
   const groupedMessages = groupMessagesByDate(messageData)
 
-  upload(JSON.stringify({ ...data, ...groupedMessages, lastId: groupedMessages.lastId }), 'discord')
+  const mergedData: DiscordMessages = {
+    ...data,
+    messages: { ...data.messages, ...groupedMessages.messages },
+    lastId: groupedMessages.lastId,
+  }
 
-  return Response.json({ ...data, ...groupedMessages, lastId: groupedMessages.lastId })
+  upload(JSON.stringify(mergedData), 'discord')
+
+  return new Response(null, {
+    status: 204,
+  })
 }
 
 async function fetchDiscordMessages(lastId: number) {
@@ -28,7 +36,7 @@ async function fetchDiscordMessages(lastId: number) {
   let end = false
 
   while (!end) {
-    const url = `https://discord.com/api/channels/1163251543861100615/messages?after=${newLastId}`
+    const url = `https://discord.com/api/channels/1163251543861100615/messages?after=${newLastId}&limit=100`
 
     const res = await fetch(url, {
       headers: {
@@ -52,7 +60,8 @@ async function fetchDiscordMessages(lastId: number) {
       continue
     }
 
-    newLastId = channel[channel.length - 1].id
+    // Discord returns in reverse
+    newLastId = channel[0].id
     result.push(...channel)
   }
 

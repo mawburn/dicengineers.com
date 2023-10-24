@@ -3,8 +3,8 @@ import ExtApi from 'openai'
 import { getData } from 'src/lib/serverOnly/getData'
 import { upload } from 'src/lib/serverOnly/upload'
 
-import type { AIMessage, MessageSummary, Summary } from 'src/app/types/Messages'
 import type { DiscordMessages } from 'src/app/types/Discord'
+import type { AIMessage, MessageSummary, Summary } from 'src/app/types/Messages'
 
 const MAX_TOKENS = 81912 as const
 
@@ -26,7 +26,9 @@ export async function GET(req: Request) {
 
   upload(JSON.stringify(summaries), 'summaries')
 
-  return Response.json(summaries)
+  return new Response(null, {
+    status: 204,
+  })
 }
 
 function trimData(discord: DiscordMessages, summary: MessageSummary) {
@@ -75,7 +77,6 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
   for (const k in messages) {
     for (const content of messages[k]) {
       const newDate = parse(k, 'MMMM d, yyyy', new Date())
-
       const aiMessages: AIMessage[] = [
         {
           role: 'system',
@@ -88,14 +89,33 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
         },
       ]
 
-      const aiRes = await extApi.chat.completions.create({
-        model: 'gpt-4',
-        messages: aiMessages,
-        temperature: 0.5,
-        max_tokens: 500,
-        frequency_penalty: 1,
-        presence_penalty: 0.25,
-      })
+      let aiRes
+      try {
+        aiRes = await extApi.chat.completions.create({
+          model: 'gpt-4',
+          messages: aiMessages,
+          temperature: 0.5,
+          max_tokens: 500,
+          frequency_penalty: 1,
+          presence_penalty: 0.25,
+        })
+      } catch (error: any) {
+        if (error.status === 429) {
+          const retryAfter = parseInt(error.headers.get('Retry-After'), 10)
+          console.log(`Rate limited by OpenAI. Retrying after ${retryAfter} seconds.`)
+          await new Promise(resolve => setTimeout(resolve, retryAfter * 1000))
+          aiRes = await extApi.chat.completions.create({
+            model: 'gpt-4',
+            messages: aiMessages,
+            temperature: 0.5,
+            max_tokens: 500,
+            frequency_penalty: 1,
+            presence_penalty: 0.25,
+          })
+        } else {
+          throw error // If it's not a rate limit error, throw it to be handled elsewhere
+        }
+      }
 
       if (aiRes.choices[0].message.content) {
         summaries.push({ date: k, summary: aiRes.choices[0].message.content })
@@ -108,7 +128,7 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
   }
 
   return {
-    lastDate: format(lastDate, 'MMMM d, yyyy'), // Convert the Date object back to a string
+    lastDate: format(lastDate, 'MMMM d, yyyy'),
     summaries,
   }
 }

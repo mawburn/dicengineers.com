@@ -2,10 +2,10 @@ import Image from 'next/image'
 import fetch from 'node-fetch'
 import { DISCORD } from 'src/lib/constants'
 import { getData as getPosts } from 'src/lib/serverOnly/getData'
-import { upload } from 'src/lib/serverOnly/upload'
 
 import { Divider } from './Divider'
 import Link from 'next/link'
+import { Reddit } from 'src/app/types/Reddit'
 
 interface Data {
   online: string | null
@@ -22,52 +22,27 @@ async function getData() {
     redditCount: null,
   }
 
-  const headers = new Headers()
-  headers.set('Authorization', `Bot ${process.env.DISCORD}`)
-  const discord = fetch('https://discord.com/api/guilds/1157151836126593054/preview', {
+  const discord = await fetch('https://discord.com/api/guilds/1157151836126593054/preview', {
     method: 'GET',
-    headers,
+    headers: {
+      Authorization: `Bot ${process.env.DISCORD}`,
+    },
     // @ts-ignore-next-line
     next: { revalidate: 3600 },
   })
 
-  const reddit = fetch('https://www.reddit.com/r/dicengineers.json', {
-    method: 'GET',
-    // @ts-ignore-next-line
-    next: { revalidate: 3600 },
-  })
+  const reddit = await getPosts('reddit')
 
-  const posts = getPosts('data')
-
-  const [discordRes, redditRes, postsRes] = await Promise.allSettled([discord, reddit, posts])
-
-  if (discordRes.status === 'fulfilled' && discordRes.value.ok) {
-    const json: any = await discordRes.value.json()
+  if (discord.ok) {
+    const json: any = await discord.json()
     data.online = `${json.approximate_presence_count}`
     data.total = `${json.approximate_member_count}`
   }
 
-  if (redditRes.status === 'fulfilled' && redditRes.value.ok) {
-    const json: any = await redditRes.value.json()
-    data.reddit = `${json.data.children[0].data.subreddit_subscribers}`
-
-    if (postsRes.status === 'fulfilled') {
-      const jsonDG: any = await postsRes.value
-      const ids = new Set<string>(jsonDG)
-      const newIds = new Set<string>(json.data.children.map((child: any) => child.data.id))
-
-      for (let id in ids) {
-        if (!ids.has(id)) {
-          newIds.add(id)
-        }
-      }
-
-      data.redditCount = newIds.size
-
-      if (newIds.size > 0) {
-        upload(JSON.stringify([...Array.from(ids), ...Array.from(newIds)]), 'data')
-      }
-    }
+  if (reddit) {
+    const json: Reddit = reddit
+    data.reddit = `${json.subscribers}`
+    data.redditCount = json.totalMessages.length
   }
 
   return { ...data }
@@ -94,9 +69,9 @@ export const Aside = async () => {
             <span className="text-2xl">{total}</span>
             <span className="italic">Total users</span>
           </a>
-          {/* <Link href="/history" className={`${countClasses} underline font-bold tracking-wider`}>
+          <Link href="/history" className={`${countClasses} underline font-bold tracking-wider`}>
             Message Summary
-          </Link> */}
+          </Link>
         </>
       )}
       <Divider className="max-w-[50%] md:mr-32" />
