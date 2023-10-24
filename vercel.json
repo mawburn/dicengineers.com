@@ -5,7 +5,7 @@
       "schedule": "0 5 * * *"
     },
     {
-      "path": "/api",
+      "path": "/api/summary",
       "schedule": "05 5 * * *"
     },
     {
