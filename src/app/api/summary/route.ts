@@ -22,6 +22,15 @@ export async function GET(req: Request) {
   const data = trimData(discordData, summaryData)
   const summariesRaw = await generateSummaries(data, summaryData)
 
+  if (summariesRaw.summaries.length === 0) {
+    return Response.json(
+      { log: 'no data' },
+      {
+        status: 200,
+      }
+    )
+  }
+
   const summaries = { ...summaryData, ...summariesRaw }
 
   upload(JSON.stringify(summaries), 'summaries')
