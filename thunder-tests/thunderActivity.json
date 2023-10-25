@@ -33,11 +33,11 @@
         "colId": "history",
         "containerId": "",
         "name": "Summarize",
-        "url": "http://localhost:3000/api/",
+        "url": "http://localhost:3000/api/summary",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-10-24T12:42:33.596Z",
-        "modified": "2023-10-24T12:42:33.596Z",
+        "modified": "2023-10-25T10:53:42.008Z",
         "headers": [
             {
                 "name": "Authorization",
