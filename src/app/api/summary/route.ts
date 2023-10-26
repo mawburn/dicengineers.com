@@ -32,7 +32,10 @@ export async function GET(req: Request) {
     )
   }
 
-  const summaries = { ...summaryData, ...summariesRaw }
+  const summaries = {
+    lastDate: summariesRaw.lastDate,
+    summaries: [...summaryData.summaries, ...summariesRaw.summaries],
+  }
 
   upload(JSON.stringify(summaries), 'summaries')
 
