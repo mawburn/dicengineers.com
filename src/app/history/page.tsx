@@ -5,7 +5,7 @@ import { Metadata } from 'next'
 import { Layout } from 'src/components/Layout'
 import { getData as getSummaries } from 'src/lib/serverOnly/getData'
 
-export const revalidate = 3600
+export const revalidate = 60
 
 interface Summary {
   date: string
