@@ -37,7 +37,7 @@ export async function GET(req: Request) {
     summaries: [...summaryData.summaries, ...summariesRaw.summaries],
   }
 
-  upload(JSON.stringify(summaries), 'summaries')
+  await upload(JSON.stringify(summaries), 'summaries')
 
   return new Response(null, {
     status: 204,

@@ -25,7 +25,7 @@ export async function GET(req: Request) {
     lastId: groupedMessages.lastId,
   }
 
-  upload(JSON.stringify(mergedData), 'discord')
+  await upload(JSON.stringify(mergedData), 'discord')
 
   return new Response(null, {
     status: 204,
