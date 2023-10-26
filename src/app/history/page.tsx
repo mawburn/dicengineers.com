@@ -1,15 +1,20 @@
 import './style.css'
 
-import { parse } from 'marked'
+import { compareDesc, format, getWeek, parse, startOfWeek } from 'date-fns'
+import { parse as parseMd } from 'marked'
 import { Metadata } from 'next'
 import { Layout } from 'src/components/Layout'
 import { getData as getSummaries } from 'src/lib/serverOnly/getData'
 
+import { SummaryAccordion } from './SummaryAccordion'
+import { SummaryDisplay } from './SummaryDisplay'
+
+import type { Summary } from 'src/app/types/Messages'
 export const revalidate = 60
 
-interface Summary {
-  date: string
-  summary: string
+export interface Week {
+  startsOn: string
+  summaries: Summary[]
 }
 
 export const metadata: Metadata = {
@@ -28,34 +33,73 @@ async function getData() {
   const summaryRes = await getSummaries('summaries')
 
   if (summaryRes) {
-    const summaryResponse = summaryRes.summaries.map((s: Summary) => ({
-      date: s.date,
-      summary: parse(s.summary),
-    }))
+    const weekNow = getWeek(new Date())
 
-    return summaryResponse
+    const summaryMapped = summaryRes.summaries
+      .map((s: Summary) => {
+        const parsedDate = parse(s.date, 'MMMM d, yyyy', new Date())
+        return {
+          date: s.date,
+          parsedDate,
+          summary: getWeek(parsedDate) === weekNow ? parseMd(s.summary) : s.summary,
+        }
+      })
+      .sort((a: Summary, b: Summary) => compareDesc(a.parsedDate, b.parsedDate))
+
+    const currentWeek: Week = {
+      startsOn: format(new Date(), 'MMMM d, yyyy'),
+      summaries: [],
+    }
+
+    const otherWeeks: Map<string, Summary[]> = new Map()
+
+    summaryMapped.forEach((s: Summary) => {
+      if (getWeek(s.parsedDate!) === weekNow) {
+        currentWeek.summaries.push(s)
+      } else {
+        const weekStart = format(startOfWeek(s.parsedDate), 'MMMM d, yyyy')
+        const startWeek = otherWeeks.get(weekStart)
+
+        if (startWeek !== undefined) {
+          startWeek.push(s)
+          otherWeeks.set(weekStart, startWeek)
+        } else {
+          otherWeeks.set(weekStart, [s])
+        }
+      }
+    })
+
+    const weekArray: Week[] = Array.from(otherWeeks.entries()).map(([startsOn, summaries]) => {
+      return {
+        startsOn,
+        summaries,
+      }
+    })
+
+    return { currentWeek, otherWeeks: weekArray }
   }
 
   return []
 }
 
+interface SummaryData {
+  currentWeek: Week
+  otherWeeks: Week[]
+}
+
 export default async function ShowCase() {
-  const data = (await getData()) as Summary[]
+  const { currentWeek, otherWeeks } = (await getData()) as SummaryData
 
   return (
     <Layout className="gap-10 my-10">
       <h2 className="text-3xl text-center">
         <span className="font-mono inline-block">#main</span> Summaries by date
       </h2>
-      {data.map(({ date, summary }) => (
-        <section
-          key={date}
-          className="max-w-prose mx-auto bg-darken rounded-lg border-2 border-darkPrimary shadow-lg p-2"
-        >
-          <h3 className="text-2xl mb-4">{date}</h3>
-          <div className="summary text-sm pl-6" dangerouslySetInnerHTML={{ __html: summary }} />
-        </section>
+      {currentWeek.summaries.map(props => (
+        <SummaryDisplay key={props.date} {...props} />
       ))}
+
+      <SummaryAccordion weeks={otherWeeks} />
     </Layout>
   )
 }

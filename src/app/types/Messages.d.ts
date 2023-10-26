@@ -1,6 +1,7 @@
 export interface Summary {
   date: string
   summary: string
+  parsedDate: Date
 }
 
 export interface MessageSummary {

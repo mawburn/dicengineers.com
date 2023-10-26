@@ -8,11 +8,15 @@
   }
 
   html, body {
-    @apply h-full w-full text-light font-bodyFont;
+    @apply h-full w-full text-light font-bodyFont bg-darkSecondary;
   }
 
   #main {
     @apply min-h-max bg-gradient-to-b from-darkPrimary to-darkSecondary;
+  }
+
+  html, body, #main {
+    scroll-behavior: smooth;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -25,6 +29,10 @@
 
   a:hover, a:any-link:hover {
     @apply cursor-pointer;
+  }
+
+  .hiddenElm {
+    @apply block w-1 h-1 opacity-0 overflow-hidden relative z-[-1];
   }
 }
 
