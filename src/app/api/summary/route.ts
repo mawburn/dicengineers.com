@@ -85,7 +85,7 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
     maxRetries: 10,
   })
 
-  const summaries: Summary[] = []
+  const summaries: Omit<Summary, 'parsedDate'>[] = []
 
   for (const k in messages) {
     for (const content of messages[k]) {
