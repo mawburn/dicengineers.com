@@ -2,18 +2,15 @@
   "crons": [
     {
       "path": "/api/discord",
-      "schedule": "0 5 * * *",
-      "maxDuration": 300
+      "schedule": "0 5 * * *"
     },
     {
       "path": "/api/summary",
-      "schedule": "10 5 * * *",
-      "maxDuration": 300
+      "schedule": "10 5 * * *"
     },
     {
       "path": "/api/reddit",
-      "schedule": "25 8 * * *",
-      "maxDuration": 300
+      "schedule": "25 8 * * *"
     }
   ]
 }

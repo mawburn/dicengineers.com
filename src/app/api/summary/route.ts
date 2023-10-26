@@ -7,6 +7,7 @@ import type { DiscordMessages } from 'src/app/types/Discord'
 import type { AIMessage, MessageSummary, Summary } from 'src/app/types/Messages'
 
 const MAX_TOKENS = 81912 as const
+export const maxDuration = 300
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
