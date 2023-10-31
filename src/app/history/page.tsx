@@ -1,6 +1,16 @@
 import './style.css'
 
-import { compareDesc, format, getWeek, parse, startOfWeek } from 'date-fns'
+import {
+  addHours,
+  compareDesc,
+  differenceInSeconds,
+  format,
+  getWeek,
+  parse,
+  set,
+  startOfWeek,
+  subHours,
+} from 'date-fns'
 import { parse as parseMd } from 'marked'
 import { Metadata } from 'next'
 import { Layout } from 'src/components/Layout'
@@ -10,7 +20,13 @@ import { SummaryAccordion } from './SummaryAccordion'
 import { SummaryDisplay } from './SummaryDisplay'
 
 import type { Summary } from 'src/app/types/Messages'
-export const revalidate = 60
+
+const secondUntilMidnight = differenceInSeconds(
+  set(subHours(addHours(new Date(), 1), 5), { hours: 0, minutes: 30, seconds: 0 }),
+  new Date()
+)
+
+export const revalidate = secondUntilMidnight > 82800 ? 60 : secondUntilMidnight
 
 export interface Week {
   startsOn: string
@@ -41,7 +57,7 @@ async function getData() {
         return {
           date: s.date,
           parsedDate,
-          summary: getWeek(parsedDate) === weekNow ? parseMd(s.summary) : s.summary,
+          summary: parseMd(s.summary),
         }
       })
       .sort((a: Summary, b: Summary) => compareDesc(a.parsedDate, b.parsedDate))
