@@ -21,13 +21,7 @@ import { SummaryDisplay } from './SummaryDisplay'
 
 import type { Summary } from 'src/app/types/Messages'
 
-const secondUntilMidnight = differenceInSeconds(
-  set(subHours(addHours(new Date(), 1), 5), { hours: 0, minutes: 30, seconds: 0 }),
-  new Date()
-)
-
-export const revalidate = secondUntilMidnight > 82800 ? 60 : secondUntilMidnight
-
+export const revalidate = 7200
 export interface Week {
   startsOn: string
   summaries: Summary[]
