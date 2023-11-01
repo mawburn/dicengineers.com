@@ -9,8 +9,7 @@ module.exports = {
         bodyFont: ['var(--font-ubuntu)'],
       },
       colors: {
-        darkSecondary: '#363B4E',
-        darkPrimary: '#15161B',
+        dark: '#262935',
         darken: 'rgba(21, 22, 27, .75)',
         light: '#FDFDFD',
         primary: '#951D3F',

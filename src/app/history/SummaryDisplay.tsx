@@ -13,8 +13,8 @@ export const SummaryDisplay = ({
       key={`${getUnixTime(parsedDate)}`}
       id={format(parsedDate, 'yyyy-MM-dd')}
       className={clsx(
-        isAccordion ? 'bg-darken' : '',
-        `max-w-prose mx-auto bg-darken rounded-lg border-2 border-darkPrimary shadow-lg p-2`
+        !isAccordion && 'bg-darken shadow-lg border-2 border-darken rounded-lg',
+        `max-w-prose mx-auto w-full p-2`
       )}
     >
       <h3 className="text-2xl mb-4">{date}</h3>

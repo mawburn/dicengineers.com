@@ -42,7 +42,7 @@ export const ShowCaseList = () =>
 
 function ListItem({ name, url, description, icon, author, games }: Data) {
   return (
-    <li className="flex flex-col p-4 w-full bg-primary border border-darkPrimary rounded-lg overflow-hidden shadow">
+    <li className="flex flex-col p-4 w-full bg-darken border border-darken rounded-lg overflow-hidden shadow">
       <a href={url} target="_blank" className="flex flex-col relative w-full h-full">
         <ExternalLink size={20} className="absolute right-[-5px] top-[-5px]" />
         <h3 className="flex gap-1 items-center pb-2 mr-6 text-lg md:text-xl">

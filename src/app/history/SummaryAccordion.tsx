@@ -4,10 +4,8 @@ import { Summary } from 'src/app/types/Messages'
 
 import { Week } from './page'
 import { SummaryDisplay } from './SummaryDisplay'
-
-interface ParsedWeek {
-  [key: string]: Week
-}
+import { Fragment } from 'react'
+import { Divider } from 'src/components/Divider'
 
 export const SummaryAccordion = ({ weeks }: { weeks: Week[] }) => {
   return weeks.map((w: Week) => {
@@ -21,10 +19,13 @@ export const SummaryAccordion = ({ weeks }: { weeks: Week[] }) => {
         className="max-w-prose w-full mx-auto bg-mauve6 bg-darken p-4 rounded-lg cursor-pointer"
       >
         <summary>
-          <span>Week of {w.startsOn}</span>
+          <span className="pl-4">Week of {w.startsOn}</span>
         </summary>
-        {w.summaries.map((s: Summary) => (
-          <SummaryDisplay key={`${getUnixTime(s.parsedDate)}`} isAccordion {...s} />
+        {w.summaries.map((s: Summary, idx: number) => (
+          <Fragment key={`${getUnixTime(s.parsedDate)}`}>
+            <SummaryDisplay isAccordion {...s} />
+            {idx !== w.summaries.length - 1 && <Divider />}
+          </Fragment>
         ))}
       </details>
     )

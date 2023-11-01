@@ -105,11 +105,14 @@ export default async function ShowCase() {
       <h2 className="text-3xl text-center">
         <span className="font-mono inline-block">#main</span> Summaries by date
       </h2>
+
       {currentWeek.summaries.map(props => (
         <SummaryDisplay key={props.date} {...props} />
       ))}
 
-      <SummaryAccordion weeks={otherWeeks} />
+      <div className="flex flex-col gap-2">
+        <SummaryAccordion weeks={otherWeeks} />
+      </div>
     </Layout>
   )
 }
