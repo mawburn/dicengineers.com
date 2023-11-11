@@ -6,8 +6,7 @@ import { upload } from 'src/lib/serverOnly/upload'
 import type { DiscordMessages } from 'src/app/types/Discord'
 import type { AIMessage, MessageSummary, Summary } from 'src/app/types/Messages'
 
-const MAX_TOKENS = 81912 as const
-export const maxDuration = 300
+const MAX_TOKENS = 128000 as const
 
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
@@ -105,7 +104,7 @@ async function generateSummaries(messages: Record<string, string[]>, data: Messa
       let aiRes
       try {
         aiRes = await extApi.chat.completions.create({
-          model: 'gpt-4',
+          model: 'gpt-4-1106-preview',
           messages: aiMessages,
           temperature: 0.5,
           max_tokens: 500,

@@ -3,8 +3,6 @@ import fetch from 'node-fetch'
 import { upload } from 'src/lib/serverOnly/upload'
 import { Reddit } from 'src/app/types/Reddit'
 
-export const maxDuration = 300
-
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
 

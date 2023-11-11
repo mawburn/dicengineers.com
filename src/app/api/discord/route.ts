@@ -4,8 +4,6 @@ import { upload } from 'src/lib/serverOnly/upload'
 
 import type { DiscordMessage, DiscordMessages } from 'src/app/types/Discord'
 
-export const maxDuration = 300
-
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
 
