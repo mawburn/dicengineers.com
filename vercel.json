@@ -7,10 +7,6 @@
     {
       "path": "/api/summary",
       "schedule": "10 5 * * *"
-    },
-    {
-      "path": "/api/reddit",
-      "schedule": "25 8 * * *"
     }
   ]
 }
